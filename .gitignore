@@ -11,3 +11,4 @@ build/Release
 
 .DS_Store
 **/.next
+**/dist
