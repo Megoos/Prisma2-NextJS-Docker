@@ -1,5 +1,6 @@
 import { nexusPrismaPlugin } from 'nexus-prisma'
-import { idArg, makeSchema, objectType, stringArg } from 'nexus'
+import { idArg, makeSchema, objectType, stringArg, booleanArg } from 'nexus'
+import { join } from 'path'
 
 const User = objectType({
   name: 'User',
@@ -33,11 +34,21 @@ const Query = objectType({
       alias: 'post',
     })
 
+    t.list.field('users', {
+      type: 'User',
+      resolve: (parent, args, ctx) => {
+        return ctx.photon.users.findMany({})
+      },
+    })
+
     t.list.field('feed', {
       type: 'Post',
-      resolve: (_parent, _args, ctx) => {
+      args: {
+        published: booleanArg(),
+      },
+      resolve: (parent, { published }, ctx) => {
         return ctx.photon.posts.findMany({
-          where: { published: true },
+          where: { published },
         })
       },
     })
@@ -107,8 +118,8 @@ const Mutation = objectType({
 export const schema = makeSchema({
   types: [Query, Mutation, Post, User],
   outputs: {
-    schema: __dirname + '/generated/schema.graphql',
-    typegen: __dirname + '/generated/typings.ts',
+    typegen: join(__dirname, '/generated/nexus-typegen.ts'),
+    schema: join(__dirname, '/generated/schema.graphql'),
   },
   plugins: [nexusPrismaPlugin()],
   typegenAutoConfig: {
