@@ -29,6 +29,7 @@ services:
       - mysql
     depends_on:
       - mysql
+      - prisma
     container_name: backend
     ports:
       - '4000:4000'
@@ -51,5 +52,5 @@ services:
       - /app/node_modules
       - /app/.next
 
-  volumes: #define our mysql volume used above
+volumes: #define our mysql volume used above
   mysql:

@@ -1,5 +1,5 @@
 {
-  "name": "typescript-graphql",
+  "name": "backend",
   "scripts": {
     "start": "node dist/server",
     "clean": "rm -rf dist",
