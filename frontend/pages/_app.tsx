@@ -1,3 +1,5 @@
+import 'antd/dist/antd.css';
+
 import App, { Container } from 'next/app';
 import React from 'react';
 import withApolloClient from '../utils/with-apollo-client';
