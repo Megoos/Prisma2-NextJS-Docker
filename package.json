@@ -13,6 +13,7 @@
     "clean": "docker system prune -af",
     "clean:volumes": "docker volume prune -f",
     "seed": "docker exec -it prisma npm run seed",
-    "test": "echo \"Error: no test specified\""
+    "test": "echo \"Error: no test specified\"",
+    "generate": "docker exec -it frontend npm run generate"
   }
 }

@@ -7,7 +7,8 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "type-check": "tsc"
+    "type-check": "tsc",
+    "generate": "gql-gen --config codegen.yml"
   },
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
@@ -16,9 +17,14 @@
     "react-dom": "^16.11.0"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^1.8.3",
+    "@graphql-codegen/typescript": "^1.8.3",
+    "@graphql-codegen/typescript-operations": "^1.8.3",
+    "@graphql-codegen/typescript-react-apollo": "^1.8.3",
     "@types/node": "^12.11.5",
     "@types/react": "^16.9.9",
     "@types/react-dom": "^16.9.2",
+    "graphql": "^14.5.8",
     "typescript": "^3.6.4"
   }
 }
