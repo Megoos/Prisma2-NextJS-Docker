@@ -1,6 +1,8 @@
 import React from 'react';
-import { Table } from 'antd';
+import { Table, Button } from 'antd';
 import { FeedQueryComponent } from '../generated/apollo-components';
+import PublishDraft from './publish-draft';
+import DeletePost from './delete-post';
 
 type Props = {
   published: boolean;
@@ -36,8 +38,13 @@ class FeedList extends React.PureComponent<Props> {
               {
                 title: 'Action',
                 key: 'action',
-                render: () => {
-                  return <p>Button Group will go here</p>;
+                render: ({ id }: { id: string }) => {
+                  return (
+                    <Button.Group>
+                      {published ? null : <PublishDraft id={id} />}
+                      <DeletePost id={id} />
+                    </Button.Group>
+                  );
                 }
               }
             ];
