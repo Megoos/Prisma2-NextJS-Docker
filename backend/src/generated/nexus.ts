@@ -4,7 +4,7 @@
  */
 
 import * as Context from "../context"
-import * as photon from "@generated/photon"
+import * as photon from "@prisma/photon"
 
 
 
@@ -20,33 +20,16 @@ declare global {
 }
 
 export interface NexusGenInputs {
-  PostCreateManyWithoutPostsInput: { // input type
-    connect?: NexusGenInputs['PostWhereUniqueInput'][] | null; // [PostWhereUniqueInput!]
-    create?: NexusGenInputs['PostCreateWithoutAuthorInput'][] | null; // [PostCreateWithoutAuthorInput!]
-  }
-  PostCreateWithoutAuthorInput: { // input type
-    content?: string | null; // String
-    createdAt?: any | null; // DateTime
-    id?: string | null; // ID
-    published?: boolean | null; // Boolean
-    title: string; // String!
-    updatedAt?: any | null; // DateTime
-  }
-  PostWhereUniqueInput: { // input type
-    id?: string | null; // ID
-  }
-  UserCreateInput: { // input type
-    email: string; // String!
-    id?: string | null; // ID
-    name?: string | null; // String
-    posts?: NexusGenInputs['PostCreateManyWithoutPostsInput'] | null; // PostCreateManyWithoutPostsInput
-  }
 }
 
 export interface NexusGenEnums {
 }
 
 export interface NexusGenRootTypes {
+  AuthPayload: { // root type
+    token: string; // String!
+    user: NexusGenRootTypes['User']; // User!
+  }
   Mutation: {};
   Post: photon.Post;
   Query: {};
@@ -60,18 +43,19 @@ export interface NexusGenRootTypes {
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
-  PostCreateManyWithoutPostsInput: NexusGenInputs['PostCreateManyWithoutPostsInput'];
-  PostCreateWithoutAuthorInput: NexusGenInputs['PostCreateWithoutAuthorInput'];
-  PostWhereUniqueInput: NexusGenInputs['PostWhereUniqueInput'];
-  UserCreateInput: NexusGenInputs['UserCreateInput'];
 }
 
 export interface NexusGenFieldTypes {
+  AuthPayload: { // field return type
+    token: string; // String!
+    user: NexusGenRootTypes['User']; // User!
+  }
   Mutation: { // field return type
     createDraft: NexusGenRootTypes['Post']; // Post!
-    deleteOnePost: NexusGenRootTypes['Post'] | null; // Post
+    deletePost: NexusGenRootTypes['Post'] | null; // Post
+    login: NexusGenRootTypes['AuthPayload']; // AuthPayload!
     publish: NexusGenRootTypes['Post'] | null; // Post
-    signupUser: NexusGenRootTypes['User']; // User!
+    signup: NexusGenRootTypes['AuthPayload']; // AuthPayload!
   }
   Post: { // field return type
     author: NexusGenRootTypes['User'] | null; // User
@@ -85,8 +69,8 @@ export interface NexusGenFieldTypes {
   Query: { // field return type
     feed: NexusGenRootTypes['Post'][]; // [Post!]!
     filterPosts: NexusGenRootTypes['Post'][]; // [Post!]!
+    me: NexusGenRootTypes['User'] | null; // User
     post: NexusGenRootTypes['Post'] | null; // Post
-    users: NexusGenRootTypes['User'][]; // [User!]!
   }
   User: { // field return type
     email: string; // String!
@@ -99,29 +83,31 @@ export interface NexusGenFieldTypes {
 export interface NexusGenArgTypes {
   Mutation: {
     createDraft: { // args
-      authorEmail?: string | null; // String
       content?: string | null; // String
       title: string; // String!
     }
-    deleteOnePost: { // args
-      where: NexusGenInputs['PostWhereUniqueInput']; // PostWhereUniqueInput!
+    deletePost: { // args
+      id?: string | null; // ID
+    }
+    login: { // args
+      email: string; // String!
+      password: string; // String!
     }
     publish: { // args
       id?: string | null; // ID
     }
-    signupUser: { // args
-      data: NexusGenInputs['UserCreateInput']; // UserCreateInput!
+    signup: { // args
+      email: string; // String!
+      name?: string | null; // String
+      password: string; // String!
     }
   }
   Query: {
-    feed: { // args
-      published?: boolean | null; // Boolean
-    }
     filterPosts: { // args
       searchString?: string | null; // String
     }
     post: { // args
-      where: NexusGenInputs['PostWhereUniqueInput']; // PostWhereUniqueInput!
+      id?: string | null; // ID
     }
   }
 }
@@ -131,9 +117,9 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "Mutation" | "Post" | "Query" | "User";
+export type NexusGenObjectNames = "AuthPayload" | "Mutation" | "Post" | "Query" | "User";
 
-export type NexusGenInputNames = "PostCreateManyWithoutPostsInput" | "PostCreateWithoutAuthorInput" | "PostWhereUniqueInput" | "UserCreateInput";
+export type NexusGenInputNames = never;
 
 export type NexusGenEnumNames = never;
 
@@ -162,4 +148,14 @@ export interface NexusGenTypes {
   allNamedTypes: NexusGenTypes['allInputTypes'] | NexusGenTypes['allOutputTypes']
   abstractTypes: NexusGenTypes['interfaceNames'] | NexusGenTypes['unionNames'];
   abstractResolveReturn: NexusGenAbstractResolveReturnTypes;
+}
+
+
+declare global {
+  interface NexusGenPluginTypeConfig<TypeName extends string> {
+  }
+  interface NexusGenPluginFieldConfig<TypeName extends string, FieldName extends string> {
+  }
+  interface NexusGenPluginSchemaConfig {
+  }
 }
